@@ -46,9 +46,12 @@ features work. The CLI should:
 
 Package lives at the repo root (not nested in a subdirectory):
 
+Managed with **uv** — no manual venv creation, use `uv run`, `uv sync`, `uv lock`, etc.
+
 ```
 talk-python-cli/
 ├── pyproject.toml
+├── uv.lock                        # Committed to version control
 ├── LICENSE
 ├── README.md
 ├── .gitignore
@@ -72,6 +75,8 @@ talk-python-cli/
 ```
 
 ## Dependencies (pyproject.toml)
+
+Created via `uv init`, then `uv add cyclopts httpx rich` and `uv add --dev pytest pytest-httpx`.
 
 ```toml
 [project]
@@ -102,6 +107,8 @@ dev = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 ```
+
+The `uv.lock` file is committed for reproducible installs.
 
 ## CLI commands
 
@@ -172,19 +179,19 @@ def search(query: str, *, limit: int = 10):
 
 ## Implementation order
 
-1. Create package structure: `pyproject.toml`, `src/talk_python_cli/__init__.py`
+1. `uv init` — create `pyproject.toml`, then add dependencies with `uv add`
 2. Implement `client.py` (HTTP JSON-RPC client)
 3. Implement `formatting.py` (output rendering)
 4. Implement `app.py` + command modules (`episodes.py`, `guests.py`, `courses.py`)
 5. Add `__main__.py` for `python -m` support
-6. Add tests with mocked HTTP responses
+6. Add tests with mocked HTTP responses (`uv add --dev pytest pytest-httpx`)
 7. Verify against live server
 
 ## Verification
 
-1. **Install**: `pip install -e ".[dev]"` (or `uv pip install -e ".[dev]"`)
-2. **Unit tests**: `pytest tests/ -v`
-3. **Smoke test**: `talkpython episodes recent --limit 3`
-4. **JSON output**: `talkpython --format json episodes recent --limit 3`
-5. **Piped output**: `talkpython episodes recent | head` — should auto-detect JSON format
-6. **Module entry**: `python -m talk_python_cli episodes recent --limit 3`
+1. **Sync**: `uv sync` (installs all deps including dev group)
+2. **Unit tests**: `uv run pytest tests/ -v`
+3. **Smoke test**: `uv run talkpython episodes recent --limit 3`
+4. **JSON output**: `uv run talkpython --format json episodes recent --limit 3`
+5. **Piped output**: `uv run talkpython episodes recent | head` — should auto-detect JSON format
+6. **Module entry**: `uv run python -m talk_python_cli episodes recent --limit 3`
