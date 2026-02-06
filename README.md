@@ -1,11 +1,15 @@
 # Talk Python CLI
 
-A command-line interface for accessing [Talk Python to Me](https://talkpython.fm) podcast episodes, guest information, and [Talk Python Training](https://training.talkpython.fm) courses. Built on the Talk Python [MCP server](https://talkpython.fm/api/mcp), it gives you structured access to the full Talk Python catalog from your terminal.
+[![PyPI version](https://badge.fury.io/py/talk-python-cli.svg)](https://pypi.org/project/talk-python-cli/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+Unlock 500+ episodes of [Talk Python to Me](https://talkpython.fm), full transcripts, guest profiles, and 50+ [Talk Python Training](https://training.talkpython.fm) courses — all from your terminal. Search, browse, and pipe structured data into your scripts, AI agents, or automation workflows.
 
 ## Why use this?
 
 - **Automation** — Query episode data, guest info, and course catalogs from scripts and pipelines.
-- **LLM & AI integration** — Pipe JSON output directly into AI agents, RAG systems, or chat workflows.
+- **LLM & AI integration** — Pipe JSON or Markdown output directly into AI agents, RAG systems, or chat workflows. Feed transcripts into RAG pipelines, build podcast assistants, or enrich your AI tools with real Python community knowledge.
 - **Quick lookups** — Search episodes, pull transcripts, and browse courses without leaving the terminal.
 
 ## Installation
@@ -13,10 +17,13 @@ A command-line interface for accessing [Talk Python to Me](https://talkpython.fm
 Requires Python 3.12+.
 
 ```bash
-# With uv (recommended)
+# Try it instantly with uvx (no install needed)
+uvx --from talk-python-cli talkpython episodes recent
+
+# Or install it permanently with uv
 uv tool install talk-python-cli
 
-# With pip
+# Or with pip
 pip install talk-python-cli
 ```
 
@@ -112,6 +119,13 @@ talkpython episodes transcript 535 | your-rag-pipeline ingest
 | `--format text\|json` | Force output format (auto-detected by default) |
 | `--url <mcp-url>` | Override the MCP server URL (default: `https://talkpython.fm/api/mcp`) |
 | `--version`, `-V` | Show version |
+
+## Part of the Talk Python ecosystem
+
+Talk Python CLI is one way to tap into the data behind the [Talk Python to Me](https://talkpython.fm) podcast and [Talk Python Training](https://training.talkpython.fm) courses. It connects to the same public [MCP server](https://talkpython.fm/api/mcp) that powers Talk Python's AI integrations — so whether you're building an agent, a search tool, or just want quick answers from the terminal, you're working with the real data.
+
+- [Talk Python to Me Podcast](https://talkpython.fm)
+- [Talk Python Training](https://training.talkpython.fm)
 
 ## License
 
