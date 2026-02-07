@@ -17,11 +17,11 @@ Unlock 500+ episodes of [Talk Python to Me](https://talkpython.fm), full transcr
 Requires Python 3.12+.
 
 ```bash
-# Try it instantly with uvx (no install needed)
-uvx --from talk-python-cli talkpython episodes recent
-
-# Or install it permanently with uv
+# Install it permanently with uv
 uv tool install talk-python-cli
+
+# Or try it instantly with uvx (no install needed)
+uvx --from talk-python-cli talkpython episodes recent
 
 # Or with pip
 pip install talk-python-cli
@@ -30,6 +30,8 @@ pip install talk-python-cli
 This installs the `talkpython` command.
 
 ## Quick start
+
+Copy this whole block and paste it into your terminal to see what you get.
 
 ```bash
 # Search for episodes about FastAPI

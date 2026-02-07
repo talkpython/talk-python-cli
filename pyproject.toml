@@ -1,6 +1,6 @@
 [project]
 name = "talk-python-cli"
-version = "0.1.1"
+version = "0.1.2"
 description = "CLI for the Talk Python to Me podcast and courses"
 requires-python = ">=3.12"
 license = "MIT"
