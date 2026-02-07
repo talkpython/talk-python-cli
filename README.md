@@ -1,6 +1,6 @@
 # Talk Python CLI
 
-[![PyPI version](https://badge.fury.io/py/talk-python-cli.svg)](https://pypi.org/project/talk-python-cli/)
+[![PyPI version](https://badge.fury.io/py/talk-python-cli.svg?v=0.2.0plus)](https://pypi.org/project/talk-python-cli/)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
