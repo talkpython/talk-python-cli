@@ -84,41 +84,55 @@ talkpython courses list
 
 ## Output formats
 
-The CLI auto-detects the best output format:
+The CLI supports three output formats via `--format`:
 
-- **Interactive terminal** — Rich-formatted Markdown with styled panels and color.
-- **Piped / redirected** — Compact JSON, ready for processing.
-
-Override the default with `--format`:
+- **`text`** (default) — Rich-formatted Markdown with styled panels and color for human reading.
+- **`json`** — Structured JSON, pretty-printed on a TTY or compact when piped.
+- **`markdown`** — Raw Markdown output with no Rich formatting. Ideal for piping into AI agents, LLMs, and automation tools that consume Markdown natively.
 
 ```bash
 # Force JSON output in the terminal
 talkpython --format json episodes search "async"
 
+# Raw Markdown for AI agents and LLM pipelines
+talkpython --format markdown episodes get 535
+
 # Force rich text output even when piping
 talkpython --format text episodes recent | less -R
 ```
 
+## Agentic AI and LLM integration
+
+Use `--format markdown` when feeding output to AI agents, LLMs, or RAG pipelines. This gives you clean, raw Markdown without terminal styling — exactly what language models expect:
+
+```bash
+# Feed an episode summary to an LLM
+talkpython --format markdown episodes get 535 | llm "Summarize this podcast episode"
+
+# Grab a transcript for RAG ingestion
+talkpython --format markdown episodes transcript 535 | your-rag-pipeline ingest
+
+# Pipe course details into an AI agent
+talkpython --format markdown courses get 57 | your-agent process
+```
+
 ## Piping JSON to other tools
 
-Because the CLI outputs JSON automatically when piped, it integrates naturally with tools like `jq`, `llm`, or your own scripts:
+The `--format json` output integrates naturally with tools like `jq` or your own scripts:
 
 ```bash
 # Extract episode titles with jq
-talkpython episodes search "testing" | jq '.title'
+talkpython --format json episodes search "testing" | jq '.title'
 
-# Feed episode data into an LLM
-talkpython episodes get 535 | llm "Summarize this podcast episode"
-
-# Grab a transcript for RAG ingestion
-talkpython episodes transcript 535 | your-rag-pipeline ingest
+# Process structured data in a script
+talkpython --format json episodes recent | python process_episodes.py
 ```
 
 ## Global options
 
 | Option | Description |
 |--------|-------------|
-| `--format text\|json` | Force output format (auto-detected by default) |
+| `--format text\|json\|markdown` | Output format: `text` (rich), `json`, or `markdown` (raw) |
 | `--url <mcp-url>` | Override the MCP server URL (default: `https://talkpython.fm/api/mcp`) |
 | `--version`, `-V` | Show version |
 

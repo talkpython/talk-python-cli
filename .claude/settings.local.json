@@ -5,7 +5,9 @@
       "Bash(./venv/bin/python -m talk_python_cli.app status:*)",
       "Bash(./venv/bin/talkpython status:*)",
       "Bash(./venv/bin/pip install:*)",
-      "Bash(./venv/bin/talkpython:*)"
+      "Bash(./venv/bin/talkpython:*)",
+      "Bash(gh issue view:*)",
+      "Bash(pyrefly check:*)"
     ]
   }
 }

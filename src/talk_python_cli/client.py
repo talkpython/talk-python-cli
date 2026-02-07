@@ -46,8 +46,8 @@ class MCPClient:
         return self._msg_id
 
     def _url(self) -> str:
-        if self.output_format == 'json':
-            return f'{self.base_url}?format=json'
+        if self.output_format in ('json', 'markdown'):
+            return f'{self.base_url}?format={self.output_format}'
         return self.base_url
 
     def _post(self, payload: dict) -> httpx.Response:
