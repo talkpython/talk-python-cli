@@ -16,6 +16,7 @@ Published on PyPI as `talk-python-cli`. Entry point: `talkpython`.
 - **After every code edit, run: `ruff format && ruff check --fix`**
 - **Use `pyrefly check` to validate type information after changes.**
 - Do not add unnecessary abstractions, comments, or docstrings to unchanged code.
+- **Update `change-log.md` after every major change** (new features, breaking changes, notable fixes). Follow the [Keep a Changelog](https://keepachangelog.com/) format already in use.
 
 ## Build & Run
 

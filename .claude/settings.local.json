@@ -7,7 +7,8 @@
       "Bash(./venv/bin/pip install:*)",
       "Bash(./venv/bin/talkpython:*)",
       "Bash(gh issue view:*)",
-      "Bash(pyrefly check:*)"
+      "Bash(pyrefly check:*)",
+      "Bash(uv lock:*)"
     ]
   }
 }
