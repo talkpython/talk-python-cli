@@ -1,3 +1,5 @@
 """Talk Python to Me CLI — query podcast episodes, guests, and courses."""
 
-__version__ = '0.1.0'
+from importlib.metadata import version
+
+__version__ = version("talk-python-cli")

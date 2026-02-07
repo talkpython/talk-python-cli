@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
+import json
 import sys
+import time
 from typing import Annotated, Literal
 
 import cyclopts
+import httpx
 
 from talk_python_cli import __version__
 from talk_python_cli.client import DEFAULT_URL, MCPClient
-from talk_python_cli.formatting import is_tty, print_error
+from talk_python_cli.formatting import console, display_json, print_error
 
 # ── Shared state ─────────────────────────────────────────────────────────────
 # The meta-app handler stores the client here so command modules can access it.
@@ -42,6 +45,38 @@ app.command(guests_app)
 app.command(courses_app)
 
 
+@app.command
+def status() -> None:
+    """Check whether the Talk Python MCP server is up and display its version info."""
+    base = _client.base_url if _client else DEFAULT_URL
+    t0 = time.monotonic()
+    try:
+        resp = httpx.get(base, timeout=15.0)
+        elapsed_ms = (time.monotonic() - t0) * 1000
+        resp.raise_for_status()
+        data = resp.json()
+    except httpx.HTTPError as exc:
+        elapsed_ms = (time.monotonic() - t0) * 1000
+        console.print(f'[tp.error]STATUS: FAILED ({elapsed_ms:.2f} ms)[/tp.error]')
+        console.print(f'[red]{exc}[/red]')
+        sys.exit(1)
+
+    # If piped / --format json, emit raw JSON
+    if _client and _client.output_format == 'json':
+        data['status'] = 'SUCCESS'
+        data['response_ms'] = round(elapsed_ms, 2)
+        display_json(json.dumps(data))
+        return
+
+    console.print()
+    console.print(f'[tp.success]STATUS: SUCCESS[/tp.success] [tp.dim]({elapsed_ms:.2f} ms)[/tp.dim]')
+    console.print()
+    for key in ('name', 'version', 'description', 'documentation'):
+        if key in data:
+            console.print(f'[tp.label]{key}:[/tp.label] {data[key]}')
+    console.print()
+
+
 # ── Meta-app: handles global options before dispatching to sub-commands ──────
 @app.meta.default
 def launcher(
@@ -50,9 +85,9 @@ def launcher(
         Literal['text', 'json'],
         cyclopts.Parameter(
             name='--format',
-            help="Output format: 'text' (rich Markdown) or 'json'. Defaults to 'json' when stdout is piped.",
+            help="Output format: 'text' (rich Markdown) or 'json'.",
         ),
-    ] = None,  # type: ignore
+    ] = 'text',
     url: Annotated[
         str,
         cyclopts.Parameter(
@@ -63,10 +98,6 @@ def launcher(
     ] = DEFAULT_URL,
 ) -> None:
     global _client
-
-    # Auto-detect: default to json when piped, text when interactive
-    if format is None:
-        format = 'text' if is_tty() else 'json'
 
     _client = MCPClient(base_url=url, output_format=format)
     try:

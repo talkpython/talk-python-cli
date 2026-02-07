@@ -1,6 +1,6 @@
 [project]
 name = "talk-python-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "CLI for the Talk Python to Me podcast and courses"
 requires-python = ">=3.12"
 license = "MIT"
@@ -8,7 +8,7 @@ authors = [
     { name = "Michael Kennedy", email = "michael@talkpython.fm" },
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -20,6 +20,7 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio",
     "Topic :: Education",
 ]
+readme = "README.md"
 dependencies = [
     "cyclopts>=3.0",
     "httpx>=0.27",

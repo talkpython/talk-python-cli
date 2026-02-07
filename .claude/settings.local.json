@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(UV_PROJECT_ENVIRONMENT=venv uv run pytest:*)"
+      "Bash(UV_PROJECT_ENVIRONMENT=venv uv run pytest:*)",
+      "Bash(./venv/bin/python -m talk_python_cli.app status:*)",
+      "Bash(./venv/bin/talkpython status:*)",
+      "Bash(./venv/bin/pip install:*)",
+      "Bash(./venv/bin/talkpython:*)"
     ]
   }
 }
