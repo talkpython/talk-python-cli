@@ -68,7 +68,7 @@ def display_json(content: str) -> None:
     """Output JSON content — pretty-printed if on a TTY, raw otherwise."""
     try:
         data = json.loads(content)
-    except json.JSONDecodeError, TypeError:
+    except (json.JSONDecodeError, TypeError):
         # Server may have returned Markdown even though JSON was requested;
         # fall back to printing the raw text.
         console.print(content)
