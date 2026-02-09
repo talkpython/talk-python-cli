@@ -1,0 +1,46 @@
+name: Python Syntax Check
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install ruff
+        run: uv tool install ruff
+
+      - name: Get changed Python files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: |
+            **/*.py
+
+      - name: Run ruff format check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
+          uv tool run ruff format --check ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: Run ruff check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          uv tool run ruff check ${{ steps.changed-files.outputs.all_changed_files }}

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-02-07
+
+### Added
+- `--format markdown` output mode for raw Markdown without Rich formatting, ideal for AI agents, LLMs, and RAG pipelines
+- New "Agentic AI and LLM integration" section in README
+- `display_markdown_raw()` in `formatting.py` for plain stdout output
+- Tests for markdown format: query param propagation, raw output, and display routing
+
+### Changed
+- `--format` flag now accepts `text`, `json`, or `markdown` (was `text` or `json`)
+- MCP client sends `?format=markdown` query param to server when markdown format is selected
+- README "Output formats" and "Piping JSON to other tools" sections updated for the new format
+
+---
+
 ## [0.1.2] - 2026-02-07
 
 ### Added

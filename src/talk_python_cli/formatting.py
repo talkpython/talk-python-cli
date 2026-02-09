@@ -39,8 +39,15 @@ def display(content: str, output_format: str) -> None:
     """Route content to the appropriate renderer."""
     if output_format == 'json':
         display_json(content)
+    elif output_format == 'markdown':
+        display_markdown_raw(content)
     else:
         display_markdown(content)
+
+
+def display_markdown_raw(content: str) -> None:
+    """Print raw Markdown content to stdout without any Rich formatting."""
+    print(content)
 
 
 def display_markdown(content: str) -> None:
@@ -61,7 +68,7 @@ def display_json(content: str) -> None:
     """Output JSON content — pretty-printed if on a TTY, raw otherwise."""
     try:
         data = json.loads(content)
-    except json.JSONDecodeError, TypeError:
+    except (json.JSONDecodeError, TypeError):
         # Server may have returned Markdown even though JSON was requested;
         # fall back to printing the raw text.
         console.print(content)

@@ -197,6 +197,35 @@ class TestOutputFormat:
             assert 'format=json' in str(req.url)
         client.close()
 
+    def test_markdown_format_adds_query_param(self, httpx_mock: HTTPXMock) -> None:
+        md_url = f'{DEFAULT_URL}?format=markdown'
+        client = MCPClient(base_url=DEFAULT_URL, output_format='markdown')
+
+        httpx_mock.add_response(
+            method='POST',
+            url=md_url,
+            json=jsonrpc_result(
+                1,
+                {
+                    'protocolVersion': '2025-03-26',
+                    'capabilities': {'tools': {}},
+                    'serverInfo': {'name': 'test', 'version': '0.1'},
+                },
+            ),
+            headers={'mcp-session-id': 's1'},
+        )
+        httpx_mock.add_response(method='POST', url=md_url, status_code=202, headers={'mcp-session-id': 's1'})
+        httpx_mock.add_response(
+            method='POST',
+            url=md_url,
+            json=tool_result(3, '# Episode 535\n\nSome markdown content'),
+        )
+
+        client.call_tool('get_episodes')
+        for req in httpx_mock.get_requests():
+            assert 'format=markdown' in str(req.url)
+        client.close()
+
 
 class TestContextManager:
     """Verify MCPClient works as a context manager."""

@@ -6,7 +6,10 @@
       "Bash(./venv/bin/talkpython status:*)",
       "Bash(./venv/bin/pip install:*)",
       "Bash(./venv/bin/talkpython:*)",
-      "WebFetch(domain:badge.fury.io)"
+      "WebFetch(domain:badge.fury.io)",
+      "Bash(gh issue view:*)",
+      "Bash(pyrefly check:*)",
+      "Bash(uv lock:*)"
     ]
   }
 }

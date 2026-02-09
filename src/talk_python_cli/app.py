@@ -82,10 +82,10 @@ def status() -> None:
 def launcher(
     *tokens: Annotated[str, cyclopts.Parameter(show=False, allow_leading_hyphen=True)],
     format: Annotated[
-        Literal['text', 'json'],
+        Literal['text', 'json', 'markdown'],
         cyclopts.Parameter(
             name='--format',
-            help="Output format: 'text' (rich Markdown) or 'json'.",
+            help="Output format: 'text' (rich Markdown), 'json', or 'markdown' (raw).",
         ),
     ] = 'text',
     url: Annotated[
